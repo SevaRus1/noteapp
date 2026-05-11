@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="row align-items-center" style="min-height: 70vh;">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold text-primary">
+            <i class="fas fa-sticky-note"></i> NoteApp
+        </h1>
+        <p class="lead">Ваш персональный блокнот для заметок, идей и задач.</p>
+        <p class="mb-4">Создавайте заметки, добавляйте изображения, сортируйте по категориям и управляйте своими записями в удобном интерфейсе.</p>
+
+        {% if not session.username %}
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">
+                    <i class="fas fa-user-plus"></i> Начать сейчас
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </a>
+            </div>
+        {% else %}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-arrow-right"></i> Перейти к заметкам
+            </a>
+        {% endif %}
+    </div>
+    <div class="col-lg-6">
+        <div class="card bg-primary text-white">
+            <div class="card-body p-4">
+                <h3><i class="fas fa-code"></i> REST API</h3>
+                <hr class="border-white">
+                <p>Проект предоставляет REST API для управления заметками:</p>
+                <ul>
+                    <li><code class="text-white">GET /api/notes</code> - все заметки</li>
+                    <li><code class="text-white">GET /api/notes/&lt;id&gt;</code> - конкретная заметка</li>
+                    <li><code class="text-white">DELETE /api/notes/&lt;id&gt;</code> - удалить заметку</li>
+                    <li><code class="text-white">GET /api/stats</code> - статистика</li>
+                </ul>
+                <a href="/api/notes" class="btn btn-light btn-sm" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Попробовать API
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

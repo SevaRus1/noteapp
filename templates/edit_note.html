@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Редактировать{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-warning">
+                <h4 class="mb-0"><i class="fas fa-edit"></i> Редактирование: {{ note.title }}</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-bold">Заголовок</label>
+                        <input type="text" class="form-control" id="title" name="title"
+                               value="{{ note.title }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label fw-bold">Категория</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="общее" {% if note.category =='общее' %}selected{% endif %}>📁 Общее</option>
+                            <option value="личное" {% if note.category =='личное' %}selected{% endif %}>💚 Личное</option>
+                            <option value="работа" {% if note.category =='работа' %}selected{% endif %}>💼 Работа</option>
+                            <option value="дела" {% if note.category =='дела' %}selected{% endif %}>✅ Дела</option>
+                            <option value="идеи" {% if note.category =='идеи' %}selected{% endif %}>💡 Идеи</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label fw-bold">Содержание</label>
+                        <textarea class="form-control" id="content" name="content" rows="8" required>{{ note.content }}</textarea>
+                    </div>
+                    {% if note.image %}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Текущее изображение</label>
+                        <div>
+                            <img src="{{ url_for('static', filename='uploads/' + note.image) }}"
+                                 style="max-height: 150px;" class="border rounded p-1">
+                        </div>
+                        <small class="text-muted">Загрузите новое, чтобы заменить</small>
+                    </div>
+                    {% endif %}
+                    <div class="mb-3">
+                        <label for="image" class="form-label fw-bold">Новое изображение</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save"></i> Сохранить изменения
+                        </button>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h4 class="mb-0"><i class="fas fa-user-plus"></i> Регистрация</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-bold">Имя пользователя</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   placeholder="Придумайте логин" required>
+                        </div>
+                        <small class="text-muted">От 3 до 20 символов</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-bold">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-bold">Пароль</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Придумайте пароль" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label fw-bold">Подтверждение пароля</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                                   placeholder="Повторите пароль" required>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="fas fa-check"></i> Зарегистрироваться
+                        </button>
+                    </div>
+                </form>
+                <hr>
+                <p class="text-center mb-0">
+                    Уже есть аккаунт? <a href="{{ url_for('login') }}" class="text-decoration-none">Войдите</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

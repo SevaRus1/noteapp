@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Создать заметку{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Новая заметка</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-bold">Заголовок <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="title" name="title"
+                               placeholder="Введите заголовок заметки" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label fw-bold">Категория</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="общее">📁 Общее</option>
+                            <option value="личное">💚 Личное</option>
+                            <option value="работа">💼 Работа</option>
+                            <option value="дела">✅ Дела</option>
+                            <option value="идеи">💡 Идеи</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label fw-bold">Содержание <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="content" name="content" rows="8"
+                                  placeholder="Введите текст заметки..." required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label fw-bold">Изображение</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                        <small class="text-muted">Поддерживаются форматы: PNG, JPG, GIF. Максимум 16MB.</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Сохранить
+                        </button>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

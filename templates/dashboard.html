@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Мои заметки{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <h2><i class="fas fa-list"></i> Мои заметки</h2>
+    <div class="mt-2 mt-md-0">
+        <a href="{{ url_for('add_note') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Новая заметка
+        </a>
+    </div>
+</div>
+
+<!-- Поиск и фильтры -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form action="{{ url_for('search') }}" method="GET" class="d-flex">
+            <input type="text" name="q" class="form-control me-2"
+                   placeholder="Поиск по заметкам..."
+                   value="{{ search_query if search_query else '' }}">
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="fas fa-search"></i> Найти
+            </button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group w-100">
+            <a href="{{ url_for('filter_category', category='все') }}"
+               class="btn btn-outline-secondary {% if current_category == 'все' or not current_category %}active{% endif %}">
+                Все
+            </a>
+            <a href="{{ url_for('filter_category', category='личное') }}"
+               class="btn btn-outline-secondary {% if current_category == 'личное' %}active{% endif %}">
+                Личное
+            </a>
+            <a href="{{ url_for('filter_category', category='работа') }}"
+               class="btn btn-outline-secondary {% if current_category == 'работа' %}active{% endif %}">
+                Работа
+            </a>
+            <a href="{{ url_for('filter_category', category='дела') }}"
+               class="btn btn-outline-secondary {% if current_category == 'дела' %}active{% endif %}">
+                Дела
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Список заметок -->
+{% if notes %}
+    <div class="row">
+        {% for note in notes %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if note.image %}
+                <img src="{{ url_for('static', filename='uploads/' + note.image) }}"
+                     class="card-img-top" alt="Изображение"
+                     style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="bg-light text-center py-5">
+                    <i class="fas fa-image fa-3x text-muted"></i>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="card-title">{{ note.title }}</h5>
+                        <span class="badge bg-secondary">{{ note.category if note.category else 'общее' }}</span>
+                    </div>
+                    <p class="card-text mt-2">{{ note.content[:100] }}{% if note.content|length > 100 %}...{% endif %}</p>
+                    <small class="text-muted">
+                        <i class="fas fa-calendar-alt"></i> {{ note.date }}
+                    </small>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="btn-group w-100">
+                        <a href="{{ url_for('edit_note', note_id=note.id) }}"
+                           class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i> Редакт.
+                        </a>
+                        <a href="{{ url_for('delete_note', note_id=note.id) }}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Удалить заметку?')">
+                            <i class="fas fa-trash"></i> Удалить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info text-center py-5">
+        <i class="fas fa-info-circle fa-2x mb-3"></i>
+        <h4>У вас пока нет заметок</h4>
+        <p>Создайте свою первую заметку!</p>
+        <a href="{{ url_for('add_note') }}" class="btn btn-primary mt-2">
+            <i class="fas fa-plus"></i> Создать заметку
+        </a>
+        {% if search_query %}
+            <div class="mt-3">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-link">Сбросить поиск</a>
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+
+<!-- REST API блок -->
+<div class="card bg-dark text-white mt-4">
+    <div class="card-body">
+        <h5><i class="fas fa-code"></i> REST API информация</h5>
+        <p class="small mb-0">
+            Доступ к API:
+            <code class="text-white">/api/notes</code> |
+            <code class="text-white">/api/stats</code> |
+            <code class="text-white">/api/notes/&lt;id&gt;</code>
+        </p>
+    </div>
+</div>
+{% endblock %}
