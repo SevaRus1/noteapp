@@ -4,6 +4,9 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
 
+with app.app_context():
+    db.create_all()
+
 app = Flask(__name__)
 app.secret_key = 'supersecretkey2026'
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -309,4 +312,6 @@ def api_stats():
 
 
 if __name__ == '__main__':
+    with app.app_context():
+    db.create_all()
     app.run(host='0.0.0.0', port=8000, debug=True)
