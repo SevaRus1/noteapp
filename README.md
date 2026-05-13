@@ -34,4 +34,4 @@
 1. Открыть терминал в папке с проектом
 2. Написать `pip install -r requirements.txt`
 3. Написать `python app.py`
-4. Открыть ``
+4. Открыть `https://divalc.pythonanywhere.com/`(Только с VPN)
