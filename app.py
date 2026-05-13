@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 app = Flask(__name__)
@@ -145,7 +145,7 @@ def add_note():
             title=title,
             content=content,
             image=filename,
-            date=datetime.now().strftime('%Y-%m-%d %H:%M'),
+            date=(datetime.now() + timedelta(hours=3)).strftime('%Y-%m-%d %H:%M'),
             category=category,
             user_id=session['user_id']
         )
